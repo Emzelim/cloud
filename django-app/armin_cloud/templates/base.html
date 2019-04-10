@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Armin-Cloud - {% block head_title%}{% endblock head_title%}</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!-- Custom styles for this template -->
+  <link href="{% static "css/custom_styles.css" %}" rel="stylesheet">
+
+  <!-- Custom Fonts -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  <!-- Custom styles-->
+  {% block styles %}{% endblock styles %}
+</head>
+
+<body>
+
+<!-- Navigation -->
+<header>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="{% url 'index' %}">Armin-Cloud</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Top left nav-->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item {% if nav_active == 'index' %} active {% endif %}">
+          <a class="nav-link" href="{% url 'index' %}">Accueil</a>
+        </li>
+        <li class="nav-item {% if nav_active == 'dashboard' %} active {% endif %}">
+          <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+        </li>
+      </ul>
+      <!-- Top right nav-->
+      <ul class="navbar-nav my-2 my-lg-0">
+        {% if user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="userProfile" role="button" data-toggle="dropdown"
+             aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-user"></i>
+            {{ user.username }}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="userProfile">
+            <a class="dropdown-item" href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+            <a class="dropdown-item" href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
+            <a class="dropdown-item" href="#"><i class="fas fa-sliders-h"></i> Settings</a>
+            {% if request.user.is_staff %}
+            <a class="dropdown-item" href="{% url 'administration' %}">
+              <i class="fas fa-user-shield"></i> Administration</a>
+            {% endif %}
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{% url 'logout' %}">
+              <i class="fa fa-fw fa-power-off"></i> Déconnexion</a>
+          </div>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a href="{% url 'login' %}" class="nav-link">
+            <i class="fa fa-user"></i>
+            Connexion
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+</nav>
+</header>
+
+<!-- Page Content -->
+<main role="main" class="container">
+  {% block content %} {% endblock content %}
+</main>
+
+<!-- Footer
+<footer class="footer py-4 bg-dark">
+  <div class="container">
+    <p class="m-0 text-center text-white">Copyright &copy; Armin-Cloud 2019</p>
+  </div>
+</footer>
+-->
+<!-- Bootstrap core JavaScript -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+{% block scripts %}{% endblock scripts %}
+
+</body>
+
+</html>

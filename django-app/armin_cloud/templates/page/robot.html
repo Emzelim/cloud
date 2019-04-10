@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+<!-- Nom d'onglet -->
+{% block head_title%}
+{{armin_robot.name}}
+{% endblock head_title%}
+
+<!-- Contenu de la page-->
+{% block content %}
+{% if autorisation %}
+<div class="container">
+  <h3>Armin : {{armin_robot.name}}</h3>
+  <div>
+    Pièce à faire : {{i_HmiOpc_set_nbPartsToDo}}
+    <br>
+    Pièce OK : {{i_HmiOpc_get_nbPartsDone}}
+    <br>
+    Pièce NOK : <span id="plc:i_HmiOpc_get_nbPartsRejected"></span>
+  </div>
+</div>
+{% else %}
+<div>
+  <h3>Pas autorisé à consulter ce robot</h3>
+</div>
+{% endif %}
+{% endblock content%}
+
+
+{% block styles %}{% endblock styles %}
+{% block scripts %}
+<script>
+  var data_hmi = JSON.parse('{{data_hmi | safe}}');
+  console.log(JSON.stringify(data_hmi));
+  document.getElementById('plc:i_HmiOpc_get_nbPartsRejected').innerHTML = data_hmi['plc:i_HmiOpc_get_nbPartsRejected'];
+</script>
+{% endblock scripts %}

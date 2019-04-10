@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+<!-- Nom d'onglet -->
+{% block head_title%}
+Accueil
+{% endblock head_title%}
+
+<!-- Contenu de la page-->
+{% block content %}
+<div>
+  Accueil
+  <br>
+  Bienvenue sur Armin-Cloud,
+  {% if user.is_authenticated %} {{ user.username }}.
+  {% else %}
+  visiteur.
+  <br>
+  <a href="{% url "login" %}">Se connecter</a>
+  {% endif %}
+</div>
+{% endblock content%}
+
+
+{% block styles %}{% endblock styles %}
+{% block scripts %}{% endblock scripts %}

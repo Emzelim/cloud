@@ -1,0 +1,5 @@
+Django==2.2
+influxdb==5.2.2
+# ---- Template :
+# django-crispy-forms==1.7.2
+# django-sb-admin==0.3.7

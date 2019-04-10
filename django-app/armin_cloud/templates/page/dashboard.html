@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+
+<!-- Nom d'onglet -->
+{% block head_title%}
+Dashboard
+{% endblock head_title%}
+
+<!-- Contenu de la page-->
+{% block content %}
+<div class="card-columns">
+  {% for armin in armin_robot %}
+  <div class="card" style="width: 18rem;">
+    <img src="{% static 'images/armin_serie_t.png' %}" class="card-img-top"
+         style="height: 12rem;" alt="armin_image">
+    <div class="card-body">
+      <h5 class="card-title">{{ armin.name }}</h5>
+      <p class="card-text">Description</p>
+      <!-- <a href="{% url 'robot' robot_id=armin.id %}" class="btn btn-primary">Select</a> -->
+      <a href="{% url 'robot' robot_id=armin.id %}" class="stretched-link"></a>
+    </div>
+    <div class="card-footer">
+      <small class="text-muted">Last updated 3 mins ago</small>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock content%}
+
+
+{% block styles %}
+<style>
+  .card-columns {
+    @include media-breakpoint-only(lg) {
+    column-count: 3;
+  }
+    @include media-breakpoint-only(xl) {
+    column-count: 5;
+  }
+  }
+</style>
+{% endblock styles %}
+
+{% block scripts %}
+<script src="https://unpkg.com/packery@2/dist/packery.pkgd.js"></script>
+{% endblock scripts %}

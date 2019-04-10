@@ -1,0 +1,57 @@
+version: '3.2'
+
+services:
+  influxdb:
+    container_name: influxdb
+    image: influxdb:latest
+    # env_file: configuration.env
+    ports:
+      - 8086:8086
+    volumes:
+      - influxdb_data:/var/lib/influxdb
+    environment:
+      - INFLUX_USER=admin
+      - INFLUX_PASSWORD=admin
+      - INFLUX_DB=influx
+      - INFLUXDB_REPORTING_DISABLED=true
+      
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    # env_file: configuration.env
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    links:
+      - influxdb
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+      
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    # volumes:
+    #   - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+      - 443:443
+
+  django-app:
+    container_name: django-app
+    build: ./django-app/
+    ports:
+      - 8000:8000
+    depends_on:
+      - influxdb
+    links:
+      - influxdb
+      - grafana
+    volumes:
+      - ./django-app/armin_cloud:/armin_cloud-app
+    command: python /armin_cloud-app/manage.py runserver 0.0.0.0:8000
+
+volumes:
+  grafana_data: {}
+  influxdb_data: {}
