@@ -12,6 +12,8 @@
 <div class="container">
   <h3>Armin : {{armin_robot.name}}</h3>
   <div>
+    Dernière mise à jour : <span id="last_update"></span>
+    <br>
     Pièce à faire : {{i_HmiOpc_set_nbPartsToDo}}
     <br>
     Pièce OK : {{i_HmiOpc_get_nbPartsDone}}
@@ -31,7 +33,17 @@
 {% block scripts %}
 <script>
   var data_hmi = JSON.parse('{{data_hmi | safe}}');
+
   console.log(JSON.stringify(data_hmi));
+  console.log('{{current_time}}');
+
+  document.getElementById('last_update').innerHTML = last_update('{{current_time}}')
   document.getElementById('plc:i_HmiOpc_get_nbPartsRejected').innerHTML = data_hmi['plc:i_HmiOpc_get_nbPartsRejected'];
+
+  function last_update(current_time) {
+    let date = current_time.substring(8,10) + current_time.substring(4,8) + current_time.substring(0,4);
+    let time = current_time.substring(11, 19);
+    return date + ' - ' + time;
+  }
 </script>
 {% endblock scripts %}

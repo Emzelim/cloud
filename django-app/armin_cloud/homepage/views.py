@@ -65,6 +65,7 @@ def robot(request, robot_id):
             "armin_robot": armin_robot,
             "i_HmiOpc_set_nbPartsToDo": data_hmi['plc:i_HmiOpc_set_nbPartsToDo'],
             "i_HmiOpc_get_nbPartsDone": data_hmi['plc:i_HmiOpc_get_nbPartsDone'],
+            "current_time": data_hmi['time'],
             "data_hmi": json.dumps(data_hmi),
         }
     else:

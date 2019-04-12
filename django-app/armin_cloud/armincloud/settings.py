@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'vps637092.ovh.net',
+    'localhost',
 ]
 
 
