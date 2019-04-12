@@ -26,7 +26,7 @@ SECRET_KEY = '_v8oq#v32=e+&q6fcorci=z)%*+(ou)qtdxyum%ssg!@=clwsf'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'http://vps637092.ovh.net',
+    'vps637092.ovh.net',
 ]
 
 
