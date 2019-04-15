@@ -4,6 +4,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from .models import ArminRobot
 from .utils import get_influxdb_client
 import json
+from revproxy.views import ProxyView
 
 
 # Create your views here.
@@ -76,66 +77,10 @@ def robot(request, robot_id):
     return render(request, 'page/robot.html', context)
 
 
-# ---- SEPARATION
+class GraphanaProxyView(ProxyView):
+    upstream = 'http://localhost:8891/dashboard/'
 
-def old_dashboard(request):
-    """Dashboard page.
-    """
-    return render(request, "django_sb_admin/sb_admin_dashboard.html",
-                  {"nav_active":"old_dashboard"})
-
-
-def charts(request):
-    """Charts page.
-    """
-    return render(request, "django_sb_admin/sb_admin_charts.html",
-                  {"nav_active":"charts"})
-
-
-def tables(request):
-    """Tables page.
-    """
-    return render(request, "django_sb_admin/sb_admin_tables.html",
-                  {"nav_active":"tables"})
-
-
-def forms(request):
-    """Forms page.
-    """
-    return render(request, "django_sb_admin/sb_admin_forms.html",
-                  {"nav_active":"forms"})
-
-
-def bootstrap_elements(request):
-    """Bootstrap elements page.
-    """
-    return render(request, "django_sb_admin/sb_admin_bootstrap_elements.html",
-                  {"nav_active":"bootstrap_elements"})
-
-
-def bootstrap_grid(request):
-    """Bootstrap grid page.
-    """
-    return render(request, "django_sb_admin/sb_admin_bootstrap_grid.html",
-                  {"nav_active":"bootstrap_grid"})
-
-
-def dropdown(request):
-    """Dropdown  page.
-    """
-    return render(request, "django_sb_admin/sb_admin_dropdown.html",
-                  {"nav_active":"dropdown"})
-
-
-def rtl_dashboard(request):
-    """RTL Dashboard page.
-    """
-    return render(request, "django_sb_admin/sb_admin_rtl_dashboard.html",
-                  {"nav_active":"rtl_dashboard"})
-
-
-def blank(request):
-    """Blank page.
-    """
-    return render(request, "django_sb_admin/sb_admin_blank.html",
-                  {"nav_active":"blank"})
+    def get_proxy_request_headers(self, request):
+        headers = super(GraphanaProxyView, self).get_proxy_request_headers(request)
+        headers['X-WEBAUTH-USER'] = request.user.username
+        return headers

@@ -1,15 +1,9 @@
-{% extends "base.html" %}
+{% extends "components/robot_main.html" %}
 {% load static %}
 
-<!-- Nom d'onglet -->
-{% block head_title%}
-{{armin_robot.name}}
-{% endblock head_title%}
-
 <!-- Contenu de la page-->
-{% block content %}
-{% if autorisation %}
-<div class="container">
+{% block detail_content %}
+<div>
   <h3>Armin : {{armin_robot.name}}</h3>
   <div>
     Dernière mise à jour : <span id="last_update"></span>
@@ -19,17 +13,12 @@
     Pièce OK : {{i_HmiOpc_get_nbPartsDone}}
     <br>
     Pièce NOK : <span id="plc:i_HmiOpc_get_nbPartsRejected"></span>
+    <br>
+    <iframe src="http://localhost:3000/d-solo/I7ysy1emk/new-dashboard-copy?orgId=1&from=1555294312903&to=1555315912903&panelId=4" width="450" height="200" frameborder="0"></iframe>
   </div>
 </div>
-{% else %}
-<div>
-  <h3>Pas autorisé à consulter ce robot</h3>
-</div>
-{% endif %}
-{% endblock content%}
+{% endblock detail_content %}
 
-
-{% block styles %}{% endblock styles %}
 {% block scripts %}
 <script>
   var data_hmi = JSON.parse('{{data_hmi | safe}}');

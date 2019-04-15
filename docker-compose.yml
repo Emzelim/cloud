@@ -27,6 +27,7 @@ services:
     ports:
       - 3000:3000
     volumes:
+      - ./conf/grafana.ini:/etc/grafana/grafana.ini
       - grafana_data:/var/lib/grafana
       
   nginx:
