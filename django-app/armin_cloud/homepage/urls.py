@@ -9,4 +9,5 @@ urlpatterns = [
     path('administration/', views.administration, name='administration'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('robot/<int:robot_id>/', views.robot, name='robot'),
+    url(r'^grafana/(?P<path>.*)$', views.GraphanaProxyView.as_view(), name='graphana-dashboards'),
 ]
