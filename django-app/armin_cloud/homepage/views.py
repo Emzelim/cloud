@@ -81,6 +81,6 @@ class GraphanaProxyView(ProxyView):
     upstream = 'http://localhost:8891/dashboard/'
 
     def get_proxy_request_headers(self, request):
-        headers = super(GraphanaProxyView, self).get_proxy_request_headers(request)
+        headers = super().get_proxy_request_headers(request)
         headers['X-WEBAUTH-USER'] = request.user.username
         return headers
